@@ -1,5 +1,6 @@
 .app {
   min-height: 100svh;
+  background-color: var(--todo-bg);
 }
 
 .main {
@@ -9,6 +10,7 @@
 }
 
 .listCard {
+  border: 1px solid var(--todo-border);
   border-radius: 5px;
   box-shadow: 0 35px 50px -15px var(--todo-shadow);
   overflow: hidden;

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddNewTodo from "./AddNewTodo";
 import TodoActionBar from "./TodoActionBar";
 import TodoFilterBar from "./TodoFilterBar";
@@ -6,6 +6,7 @@ import TodoHeader from "./TodoHeader";
 import TodoList from "./TodoList";
 import type { FilterName, Todo } from "../types";
 import styles from "./TodoApp.module.css";
+import useTheme from "../hooks/useTheme";
 
 const FILTER_MAP: Record<FilterName, (task: Todo) => boolean> = {
     All: () => true,
@@ -17,30 +18,46 @@ const FILTER_NAMES = Object.keys(FILTER_MAP) as FilterName[];
 export default function TodoApp() {
     const [todoList, setTodoList] = useState<Todo[]>([]);
     const [filter, setFilter] = useState<FilterName>("All");
+    const [theme, setTheme] = useTheme();
     const todoIdRef = useRef(0);
 
-    const onAddNewTodo = ({ completed, text }: { completed: boolean; text: string }) => {
+    const onAddNewTodo = ({
+        completed,
+        text,
+    }: {
+        completed: boolean;
+        text: string;
+    }) => {
         setTodoList((prev) => [
             ...prev,
             { id: todoIdRef.current++, completed, text },
         ]);
     };
 
-    const onToggleTheme = () => {};
+    const onToggleTheme = () => {
+        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    };
+
+    useEffect(() => {
+        const docBody = document.body;
+        docBody.dataset.theme = theme;
+    }, [theme]);
 
     const onToggleTodo = (entry: Todo) => {
         setTodoList((prev) =>
             prev.map((item) =>
-                item.id === entry.id ? { ...entry, completed: !entry.completed } : item
-            )
+                item.id === entry.id
+                    ? { ...entry, completed: !entry.completed }
+                    : item,
+            ),
         );
     };
 
     const onUpdateTodo = (entry: Todo, text: string) => {
         setTodoList((prev) =>
             prev.map((item) =>
-                item.id === entry.id ? { ...entry, text } : item
-            )
+                item.id === entry.id ? { ...entry, text } : item,
+            ),
         );
     };
 
@@ -57,7 +74,7 @@ export default function TodoApp() {
 
     return (
         <div className={styles.app}>
-            <TodoHeader onToggleTheme={onToggleTheme} />
+            <TodoHeader theme={theme} onToggleTheme={onToggleTheme} />
             <main className={styles.main}>
                 <AddNewTodo onHandleSubmit={onAddNewTodo} />
                 <div className={styles.listCard}>

@@ -1,7 +1,13 @@
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import styles from "./TodoHeader.module.css";
 
-export default function TodoHeader({ onToggleTheme }: { onToggleTheme: () => void }) {
+export default function TodoHeader({
+    theme,
+    onToggleTheme,
+}: {
+    theme: string;
+    onToggleTheme: () => void;
+}) {
     return (
         <header className={styles.header}>
             <div className={styles.inner}>
@@ -11,7 +17,7 @@ export default function TodoHeader({ onToggleTheme }: { onToggleTheme: () => voi
                     onClick={onToggleTheme}
                     aria-label="Toggle theme"
                 >
-                    <FaMoon />
+                    {theme === "dark" ? <FaSun /> : <FaMoon />}
                 </button>
             </div>
         </header>

@@ -17,7 +17,7 @@
   --mono: ui-monospace, Consolas, monospace;
 
   /* Todo app — light theme */
-  --todo-bg: hsl(236, 33%, 92%);
+  --todo-bg: #ffffff;
   --todo-card: #ffffff;
   --todo-text: hsl(235, 19%, 35%);
   --todo-text-muted: hsl(236, 9%, 61%);
@@ -30,7 +30,6 @@
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
-  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -86,6 +85,7 @@
 
 /* Manual theme toggle — takes precedence over system preference */
 [data-theme="dark"] {
+  color-scheme: dark;
   --todo-bg: hsl(235, 21%, 11%);
   --todo-card: hsl(235, 24%, 19%);
   --todo-text: hsl(234, 39%, 85%);
@@ -97,12 +97,14 @@
 }
 
 [data-theme="light"] {
-  --todo-bg: hsl(236, 33%, 92%);
+  color-scheme: light;
+  --bg: #fff;
+  --todo-bg: #ffffff;
   --todo-card: #ffffff;
   --todo-text: hsl(235, 19%, 35%);
   --todo-text-muted: hsl(236, 9%, 61%);
   --todo-text-done: hsl(233, 11%, 84%);
-  --todo-border: hsl(236, 33%, 92%);
+  --todo-border: hsl(233, 11%, 84%);
   --todo-accent: hsl(220, 98%, 61%);
   --todo-shadow: rgba(194, 195, 214, 0.5);
 }

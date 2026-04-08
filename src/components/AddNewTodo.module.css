@@ -1,5 +1,6 @@
 .form {
   background: var(--todo-card);
+  border: 1px solid var(--todo-border);
   border-radius: 5px;
   box-shadow: 0 35px 50px -15px var(--todo-shadow);
   padding: 0 20px;
