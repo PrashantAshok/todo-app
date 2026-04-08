@@ -1,6 +1,6 @@
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TodoApp from "./TodoApp";
-import { render, screen } from "@testing-library/react";
 
 describe("TodoApp", () => {
     it("adds a new todo when the form is submitted", async () => {
@@ -25,11 +25,8 @@ describe("TodoApp", () => {
         await user.type(inputField, "First Task{enter}");
 
         await user.type(inputField, "Second Task{enter}");
-        // expect(screen.getByRole("textbox", { name: /todo text/i })).toHaveValue(
-        //     "First Task",
-        // );
-        // The above would fail since there are multiple todo text textboxes.
-        // Better to use queryByDisplayValue
+        
+        expect(screen.queryByDisplayValue("First Task")).toBeInTheDocument();
         expect(screen.queryByDisplayValue("Second Task")).toBeInTheDocument();
         expect(inputField).toHaveValue("");
     });

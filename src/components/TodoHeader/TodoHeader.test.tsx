@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
 import TodoHeader from "./TodoHeader";
+import userEvent from "@testing-library/user-event";
 
 describe("TodoHeader Component", () => {
     it("renders light theme", async () => {
