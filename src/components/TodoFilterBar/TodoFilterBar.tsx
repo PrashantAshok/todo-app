@@ -1,4 +1,4 @@
-import type { FilterName } from "../types";
+import type { FilterName } from "../../types";
 import styles from "./TodoFilterBar.module.css";
 
 interface Props {
