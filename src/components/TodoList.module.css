@@ -1,0 +1,13 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.empty {
+  padding: 20px;
+  color: var(--todo-text-muted);
+  font-size: 14px;
+  background: var(--todo-card);
+  margin: 0;
+}

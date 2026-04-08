@@ -1,0 +1,23 @@
+.app {
+  min-height: 100svh;
+}
+
+.main {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+.listCard {
+  border-radius: 5px;
+  box-shadow: 0 35px 50px -15px var(--todo-shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.hint {
+  text-align: center;
+  color: var(--todo-text-muted);
+  font-size: 14px;
+  margin-top: 40px;
+}

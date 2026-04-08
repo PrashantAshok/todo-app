@@ -1,29 +1,43 @@
+import { FaTimes } from "react-icons/fa";
 import type { Todo } from "../types";
+import styles from "./TodoItem.module.css";
 
 interface Props {
     entry: Todo;
     onToggleTodo: (entry: Todo) => void;
     onUpdateTodo: (entry: Todo, text: string) => void;
+    onDeleteTodo: (id: number) => void;
 }
 
-export default function TodoItem({ entry, onToggleTodo, onUpdateTodo }: Props) {
+export default function TodoItem({ entry, onToggleTodo, onUpdateTodo, onDeleteTodo }: Props) {
     const inputId = `todo-input-${entry.id}`;
     return (
-        <li>
-            <input
-                type="checkbox"
-                checked={entry.completed}
-                onChange={() => onToggleTodo(entry)}
-                aria-labelledby={inputId}
-            />
+        <li className={styles.item}>
+            <label className={styles.checkboxWrapper}>
+                <input
+                    className={styles.checkboxInput}
+                    type="checkbox"
+                    checked={entry.completed}
+                    onChange={() => onToggleTodo(entry)}
+                    aria-labelledby={inputId}
+                />
+                <span className={styles.checkboxCustom} aria-hidden="true" />
+            </label>
             <input
                 id={inputId}
                 aria-label="Todo text"
-                className={entry.completed ? "done" : ""}
+                className={`${styles.text} ${entry.completed ? styles.done : ""}`}
                 type="text"
                 value={entry.text}
                 onChange={(e) => onUpdateTodo(entry, e.target.value)}
             />
+            <button
+                className={styles.deleteBtn}
+                onClick={() => onDeleteTodo(entry.id)}
+                aria-label={`Delete "${entry.text}"`}
+            >
+                <FaTimes />
+            </button>
         </li>
     );
 }

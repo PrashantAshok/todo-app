@@ -1,50 +1,17 @@
-import type { FilterName } from "../types";
-
-interface FilterButtonProps {
-    name: FilterName;
-    setFilter: (name: FilterName) => void;
-    isPressed: boolean;
-}
-
-function FilterButton({ name, setFilter, isPressed }: FilterButtonProps) {
-    return (
-        <button onClick={() => setFilter(name)} aria-pressed={isPressed}>
-            <span>{name}</span>
-        </button>
-    );
-}
+import styles from "./TodoActionBar.module.css";
 
 interface Props {
     count: number;
-    filterNames: FilterName[];
-    setFilter: (name: FilterName) => void;
-    selectedFilter: FilterName;
     onClearCompleted: () => void;
 }
 
-export default function TodoActionBar({
-    count,
-    filterNames,
-    setFilter,
-    selectedFilter,
-    onClearCompleted,
-}: Props) {
+export default function TodoActionBar({ count, onClearCompleted }: Props) {
     return (
-        <footer>
-            <div>{count} items left</div>
-            <div role="group" aria-label="Filter todos">
-                {filterNames.map((name) => (
-                    <FilterButton
-                        name={name}
-                        key={name}
-                        isPressed={name === selectedFilter}
-                        setFilter={setFilter}
-                    />
-                ))}
-            </div>
-            <div>
-                <button onClick={onClearCompleted}>Clear completed</button>
-            </div>
-        </footer>
+        <div className={styles.bar}>
+            <span className={styles.count}>{count} items left</span>
+            <button className={styles.clearBtn} onClick={onClearCompleted}>
+                Clear Completed
+            </button>
+        </div>
     );
 }

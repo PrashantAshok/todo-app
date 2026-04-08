@@ -1,0 +1,33 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--todo-card);
+}
+
+.count {
+  font-size: 14px;
+  color: var(--todo-text-muted);
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--todo-text-muted);
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.15s;
+}
+
+.clearBtn:hover {
+  color: var(--todo-text);
+}
+
+.clearBtn:focus-visible {
+  outline: 2px solid var(--todo-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

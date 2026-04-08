@@ -1,4 +1,5 @@
 :root {
+  /* Template variables */
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
@@ -15,6 +16,16 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
+  /* Todo app — light theme */
+  --todo-bg: hsl(236, 33%, 92%);
+  --todo-card: #ffffff;
+  --todo-text: hsl(235, 19%, 35%);
+  --todo-text-muted: hsl(236, 9%, 61%);
+  --todo-text-done: hsl(233, 11%, 84%);
+  --todo-border: hsl(236, 33%, 92%);
+  --todo-accent: hsl(220, 98%, 61%);
+  --todo-shadow: rgba(194, 195, 214, 0.5);
+
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
@@ -30,6 +41,19 @@
   }
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* System dark mode preference */
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -43,6 +67,16 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+    /* Todo app — dark theme */
+    --todo-bg: hsl(235, 21%, 11%);
+    --todo-card: hsl(235, 24%, 19%);
+    --todo-text: hsl(234, 39%, 85%);
+    --todo-text-muted: hsl(234, 11%, 52%);
+    --todo-text-done: hsl(233, 14%, 35%);
+    --todo-border: hsl(237, 14%, 26%);
+    --todo-accent: hsl(220, 98%, 61%);
+    --todo-shadow: rgba(0, 0, 0, 0.3);
   }
 
   #social .button-icon {
@@ -50,12 +84,35 @@
   }
 }
 
+/* Manual theme toggle — takes precedence over system preference */
+[data-theme="dark"] {
+  --todo-bg: hsl(235, 21%, 11%);
+  --todo-card: hsl(235, 24%, 19%);
+  --todo-text: hsl(234, 39%, 85%);
+  --todo-text-muted: hsl(234, 11%, 52%);
+  --todo-text-done: hsl(233, 14%, 35%);
+  --todo-border: hsl(237, 14%, 26%);
+  --todo-accent: hsl(220, 98%, 61%);
+  --todo-shadow: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+  --todo-bg: hsl(236, 33%, 92%);
+  --todo-card: #ffffff;
+  --todo-text: hsl(235, 19%, 35%);
+  --todo-text-muted: hsl(236, 9%, 61%);
+  --todo-text-done: hsl(233, 11%, 84%);
+  --todo-border: hsl(236, 33%, 92%);
+  --todo-accent: hsl(220, 98%, 61%);
+  --todo-shadow: rgba(194, 195, 214, 0.5);
+}
+
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  margin: 0;
+  text-align: left;
+  border-inline: none;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -64,60 +121,4 @@
 
 body {
   margin: 0;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }

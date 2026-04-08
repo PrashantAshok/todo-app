@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import AddNewTodo from "./AddNewTodo";
 import TodoActionBar from "./TodoActionBar";
+import TodoFilterBar from "./TodoFilterBar";
 import TodoHeader from "./TodoHeader";
 import TodoList from "./TodoList";
 import type { FilterName, Todo } from "../types";
+import styles from "./TodoApp.module.css";
 
 const FILTER_MAP: Record<FilterName, (task: Todo) => boolean> = {
     All: () => true,
@@ -42,6 +44,10 @@ export default function TodoApp() {
         );
     };
 
+    const onDeleteTodo = (id: number) => {
+        setTodoList((prev) => prev.filter((item) => item.id !== id));
+    };
+
     const onClearCompleted = () => {
         setTodoList((prev) => prev.filter((item) => !item.completed));
     };
@@ -50,21 +56,28 @@ export default function TodoApp() {
     const filteredList = todoList.filter(FILTER_MAP[filter]);
 
     return (
-        <div>
+        <div className={styles.app}>
             <TodoHeader onToggleTheme={onToggleTheme} />
-            <AddNewTodo onHandleSubmit={onAddNewTodo} />
-            <TodoActionBar
-                filterNames={FILTER_NAMES}
-                count={activeCount}
-                setFilter={setFilter}
-                selectedFilter={filter}
-                onClearCompleted={onClearCompleted}
-            />
-            <TodoList
-                list={filteredList}
-                onToggleTodo={onToggleTodo}
-                onUpdateTodo={onUpdateTodo}
-            />
+            <main className={styles.main}>
+                <AddNewTodo onHandleSubmit={onAddNewTodo} />
+                <div className={styles.listCard}>
+                    <TodoList
+                        list={filteredList}
+                        onToggleTodo={onToggleTodo}
+                        onUpdateTodo={onUpdateTodo}
+                        onDeleteTodo={onDeleteTodo}
+                    />
+                    <TodoActionBar
+                        count={activeCount}
+                        onClearCompleted={onClearCompleted}
+                    />
+                </div>
+                <TodoFilterBar
+                    filterNames={FILTER_NAMES}
+                    setFilter={setFilter}
+                    selectedFilter={filter}
+                />
+            </main>
         </div>
     );
 }
