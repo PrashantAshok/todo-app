@@ -1,55 +1,52 @@
-import { useId, useState } from "react";
+import { useRef, useState } from "react";
 import AddNewTodo from "./AddNewTodo";
 import TodoActionBar from "./TodoActionBar";
 import TodoHeader from "./TodoHeader";
 import TodoList from "./TodoList";
+import type { FilterName, Todo } from "../types";
 
-let todoId = 0;
-const FILTER_MAP = {
+const FILTER_MAP: Record<FilterName, (task: Todo) => boolean> = {
     All: () => true,
-    Active: (task) => !task.state,
-    Completed: (task) => task.state,
+    Active: (task) => !task.completed,
+    Completed: (task) => task.completed,
 };
-const FILTER_NAMES = Object.keys(FILTER_MAP);
+const FILTER_NAMES = Object.keys(FILTER_MAP) as FilterName[];
 
 export default function TodoApp() {
-    const [todoList, setTodoList] = useState([]);
-    const [filter, setFilter] = useState("All");
-    const listId = useId();
+    const [todoList, setTodoList] = useState<Todo[]>([]);
+    const [filter, setFilter] = useState<FilterName>("All");
+    const todoIdRef = useRef(0);
 
-    const onAddNewTodo = ({ newTodoState, newTodoText }) => {
-        setTodoList((prev) => {
-            return [
-                ...prev,
-                {
-                    id: todoId++,
-                    state: newTodoState,
-                    text: newTodoText,
-                },
-            ];
-        });
+    const onAddNewTodo = ({ completed, text }: { completed: boolean; text: string }) => {
+        setTodoList((prev) => [
+            ...prev,
+            { id: todoIdRef.current++, completed, text },
+        ]);
     };
 
     const onToggleTheme = () => {};
 
-    const onToggleTodo = ({ entry }) => {
-        setTodoList((prev) => {
-            return prev.map((item) =>
-                item.id === entry.id ? { ...entry, state: !entry.state } : item,
-            );
-        });
+    const onToggleTodo = (entry: Todo) => {
+        setTodoList((prev) =>
+            prev.map((item) =>
+                item.id === entry.id ? { ...entry, completed: !entry.completed } : item
+            )
+        );
     };
 
-    const onUpdateTodo = ({ event, entry }) => {
-        setTodoList((prev) => {
-            return prev.map((item) =>
-                item.id === entry.id
-                    ? { ...entry, text: event.target.value }
-                    : item,
-            );
-        });
+    const onUpdateTodo = (entry: Todo, text: string) => {
+        setTodoList((prev) =>
+            prev.map((item) =>
+                item.id === entry.id ? { ...entry, text } : item
+            )
+        );
     };
 
+    const onClearCompleted = () => {
+        setTodoList((prev) => prev.filter((item) => !item.completed));
+    };
+
+    const activeCount = todoList.filter((item) => !item.completed).length;
     const filteredList = todoList.filter(FILTER_MAP[filter]);
 
     return (
@@ -57,15 +54,14 @@ export default function TodoApp() {
             <TodoHeader onToggleTheme={onToggleTheme} />
             <AddNewTodo onHandleSubmit={onAddNewTodo} />
             <TodoActionBar
-                FILTER_NAMES={FILTER_NAMES}
-                count={filteredList.length}
+                filterNames={FILTER_NAMES}
+                count={activeCount}
                 setFilter={setFilter}
                 selectedFilter={filter}
-                listId={listId}
+                onClearCompleted={onClearCompleted}
             />
             <TodoList
                 list={filteredList}
-                listId={listId}
                 onToggleTodo={onToggleTodo}
                 onUpdateTodo={onUpdateTodo}
             />

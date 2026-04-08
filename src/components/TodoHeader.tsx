@@ -1,10 +1,10 @@
 import { FaMoon, FaSun } from "react-icons/fa";
 
-export default function TodoHeader({ onToggleTheme }) {
+export default function TodoHeader({ onToggleTheme }: { onToggleTheme: () => void }) {
   return (
     <header className="">
       <h1>Todo</h1>
-      <button onClick={onToggleTheme}>
+      <button onClick={onToggleTheme} aria-label="Toggle theme">
         <FaSun />
         <FaMoon />
       </button>

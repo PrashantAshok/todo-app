@@ -1,38 +1,40 @@
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
 
-export default function AddNewTodo({ onHandleSubmit }) {
-    const [newTodoText, setNewTodoText] = useState("");
-    const [newTodoState, setNewTodoState] = useState(false);
+interface Props {
+    onHandleSubmit: (data: { completed: boolean; text: string }) => void;
+}
 
-    const handleNewTodo = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTodoText(e.target.value);
-    };
-
-    const onToggleNewTodo = () => {
-        setNewTodoState((prev) => !prev);
-    };
+export default function AddNewTodo({ onHandleSubmit }: Props) {
+    const [text, setText] = useState("");
+    const [completed, setCompleted] = useState(false);
 
     const onFormSubmit = (e: SubmitEvent) => {
         e.preventDefault();
-        onHandleSubmit({ newTodoState, newTodoText });
-        setNewTodoText('');
-        setNewTodoState(false);
+        if (!text.trim()) return;
+        onHandleSubmit({ completed, text: text.trim() });
+        setText("");
+        setCompleted(false);
     };
 
     return (
         <form onSubmit={onFormSubmit}>
             <input
                 type="checkbox"
-                checked={newTodoState}
-                onChange={onToggleNewTodo}
-                aria-label="Toggle state of new todo"
+                checked={completed}
+                onChange={() => setCompleted((prev) => !prev)}
+                aria-label="Mark new todo as completed"
             />
+            <label htmlFor="new-todo-input" className="sr-only">
+                New todo
+            </label>
             <input
+                id="new-todo-input"
                 type="text"
                 placeholder="Create a new todo..."
-                value={newTodoText}
-                onChange={handleNewTodo}
+                value={text}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
             />
+            <button type="submit">Add</button>
         </form>
     );
 }
