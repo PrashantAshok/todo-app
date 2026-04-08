@@ -9,7 +9,12 @@ interface Props {
     onDeleteTodo: (id: number) => void;
 }
 
-export default function TodoItem({ entry, onToggleTodo, onUpdateTodo, onDeleteTodo }: Props) {
+export default function TodoItem({
+    entry,
+    onToggleTodo,
+    onUpdateTodo,
+    onDeleteTodo,
+}: Props) {
     const inputId = `todo-input-${entry.id}`;
     return (
         <li className={styles.item}>
@@ -19,13 +24,13 @@ export default function TodoItem({ entry, onToggleTodo, onUpdateTodo, onDeleteTo
                     type="checkbox"
                     checked={entry.completed}
                     onChange={() => onToggleTodo(entry)}
-                    aria-labelledby={inputId}
+                    aria-label={`Toggle completed for ${entry.text}`}
                 />
                 <span className={styles.checkboxCustom} aria-hidden="true" />
             </label>
             <input
                 id={inputId}
-                aria-label="Todo text"
+                aria-label="Edit todo task"
                 className={`${styles.text} ${entry.completed ? styles.done : ""}`}
                 type="text"
                 value={entry.text}
