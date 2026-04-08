@@ -1,6 +1,6 @@
 import { FaTimes } from "react-icons/fa";
-import type { Todo } from "../types";
 import styles from "./TodoItem.module.css";
+import type { Todo } from "../../types";
 
 interface Props {
     entry: Todo;

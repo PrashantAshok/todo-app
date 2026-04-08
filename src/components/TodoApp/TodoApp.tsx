@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import AddNewTodo from "./AddNewTodo";
-import TodoActionBar from "./TodoActionBar";
-import TodoFilterBar from "./TodoFilterBar";
-import TodoHeader from "./TodoHeader";
-import TodoList from "./TodoList";
-import type { FilterName, Todo } from "../types";
 import styles from "./TodoApp.module.css";
-import useTheme from "../hooks/useTheme";
+import useTheme from "../../hooks/useTheme";
+import type { FilterName, Todo } from "../../types";
+import TodoHeader from "../TodoHeader/TodoHeader";
+import AddNewTodo from "../AddNewTodo/AddNewTodo";
+import TodoList from "../TodoList/TodoList";
+import TodoActionBar from "../TodoActionBar/TodoActionBar";
+import TodoFilterBar from "../TodoFilterBar/TodoFilterBar";
 
 const FILTER_MAP: Record<FilterName, (task: Todo) => boolean> = {
     All: () => true,

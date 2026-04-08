@@ -1,7 +1,0 @@
-.todo-list {
-    margin: 20px 0;
-}
-
-.todo-list input[type="text"].done {
-    text-decoration: line-through;
-}
